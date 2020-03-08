@@ -1,0 +1,23 @@
+{
+    "name": "leslie-renee-dizon_comp308-lab2",
+    "version": "1.0.0",
+    "description": "LeslieReneeDizon_COMP308Lab2",
+    "main": "server.js",
+    "author": {
+        "name": ""
+    },
+    "dependencies": {
+        "crypto-random-string": "^3.1.0",
+        "body-parser": "^1.19.0",
+        "compression": "^1.7.4",
+        "connect-flash": "^0.1.1",
+        "ejs": "^3.0.1",
+        "express": "^4.17.1",
+        "express-session": "^1.17.0",
+        "method-override": "^2.3.10",
+        "mongoose": "^5.8.9",
+        "morgan": "^1.9.1",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0"
+    }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="/css/MyStyle.css">
+
+<title><%= title %></title>
+</head>
+<body class="text-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="/">Hello <%= user.fullName %></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExample07">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/addcomment">Add Comment</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/displayallstudents">Display All Students</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/commentsbystudent">Display Comments by Student</a>
+				</li>
+			</ul>
+			<div class="form-inline my-2 my-md-0">
+				<a class="btn btn-lg btn-primary btn-block form-control" href="/signout">Logout</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<main role="main" class="container container-main">
+<form method="post" action="/commentsbystudent" class="form-signin">
+	<svg class="bi bi-person text-info" width="27em" height="27em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path fill-rule="evenodd" d="M15 16s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002zM5.022 15h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C13.516 12.68 12.289 12 10 12c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002zM10 9a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
+	</svg>
+	<h1 class="h3 mb-3 font-weight-normal">Search comments by Student:</h1>
+	
+	<!-- Display flash messages  -->
+	<% for(var i in badmessage) { %>
+		<div class="alert alert-danger" role="alert">
+			<%= badmessage[i] %>
+		</div>
+	<% } %>
+
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"email" class="my-label">Email</label></span>
+		</div>
+		<input type="email" class="form-control" size="50" placeholder="Enter your email address" id="email" name="email" aria-label="email" aria-describedby="inputGroup-sizing-default">
+	</div>
+	<input class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" name="submit">
+</form>
+</main>
+</body>
+</html>

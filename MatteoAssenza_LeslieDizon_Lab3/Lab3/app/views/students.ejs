@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="/css/MyStyle.css">
+
+<title><%= title %></title>
+</head>
+<body class="text-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="/">Hello <%= user.fullName %></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExample07">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/addcomment">Add Comment</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/displayallstudents">Display All Students</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/commentsbystudent">Display Comments by Student</a>
+				</li>
+			</ul>
+			<div class="form-inline my-2 my-md-0">
+				<a class="btn btn-lg btn-primary btn-block form-control" href="/signout">Logout</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<main role="main" class="container container-main">
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Favorite Programming Language</th>
+            <th scope="col">Favorite Game</th>
+        </tr>
+    </thead>    
+    <tbody>
+<% 
+    let ctr = 0;
+
+    users.forEach( function(user)
+    { 
+        ctr++;
+%>
+        <tr>
+            <th scope="row"><%= ctr %></th>
+            <td><%= user.fullName %></td>
+            <td><%= user.email %></td>
+            <td><%= user.favoriteProgrammingLanguage %></td>
+            <td><%= user.favoriteGame %></td>
+        </tr>
+
+<% 
+    })
+%>     
+    </tbody>
+</table>
+</main>
+</body>
+</html>

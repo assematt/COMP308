@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/css/MyStyle.css">
+
+<title><%= title %></title>
+</head>
+<body class="text-center">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="/">Hello <%= user.fullName %></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExample07">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/addcomment">Add Comment</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/displayallstudents">Display All Students</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/commentsbystudent">Display Comments by Student</a>
+				</li>
+			</ul>
+			<div class="form-inline my-2 my-md-0">
+				<a class="btn btn-lg btn-primary btn-block form-control" href="/signout">Logout</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<main role="main" class="container-main">
+<form method="post" action="/addcomment" class="form-signup">
+	<svg class="bi bi-building text-info" width="27em" height="27em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path fill-rule="evenodd" d="M17.285 2.089a.5.5 0 01.215.411v15a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5V16h-1v1.5a.5.5 0 01-.5.5H3a.5.5 0 01-.5-.5v-6a.5.5 0 01.418-.493l5.582-.93V5.5a.5.5 0 01.324-.468l8-3a.5.5 0 01.46.057zM9.5 5.846V10.5a.5.5 0 01-.418.493l-5.582.93V17h8v-1.5a.5.5 0 01.5-.5h2a.5.5 0 01.5.5V17h2V3.221l-7 2.625z" clip-rule="evenodd"></path>
+		<path fill-rule="evenodd" d="M8.5 17.5v-7h1v7h-1z" clip-rule="evenodd"></path>
+		<path d="M4.5 13h1v1h-1v-1zm2 0h1v1h-1v-1zm-2 2h1v1h-1v-1zm2 0h1v1h-1v-1zm6-10h1v1h-1V5zm2 0h1v1h-1V5zm-4 2h1v1h-1V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zm-2 2h1v1h-1V9zm2 0h1v1h-1V9zm-4 0h1v1h-1V9zm0 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1z"></path>
+	</svg>
+	<h1 class="h3 mb-3 font-weight-normal"><%= title %></h1>
+	
+	<!-- Display flash messages  -->
+	<% for(var i in badmessage) { %>
+		<div class="alert alert-danger" role="alert">
+			<%= badmessage[i] %>
+		</div>
+	<% } %>
+
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"courseCode" class="my-label">Course Code</label></span>
+		</div>
+		<input type="text" class="form-control" size="50" placeholder="Enter your course code" id="courseCode" name="courseCode" value="<%= comment.courseCode %>" aria-label="courseCode" aria-describedby="inputGroup-sizing-default">
+	</div>
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"courseName" class="my-label">Course Name</label></span>
+		</div>
+		<input type="text" class="form-control" size="50" placeholder="Enter your course name" id="courseName" name="courseName" value="<%= comment.courseName %>" aria-label="courseName" aria-describedby="inputGroup-sizing-default">
+	</div>
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"program" class="my-label">Program</label></span>
+		</div>
+		<input type="text" class="form-control" size="50" placeholder="Enter your program" id="program" name="program" value="<%= comment.program %>" aria-label="program" aria-describedby="inputGroup-sizing-default">
+	</div>
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"semester" class="my-label">Semester</label></span>
+		</div>
+		<input type="text" class="form-control" size="50" placeholder="Enter your semester" id="semester" name="semester" value="<%= comment.semester %>" aria-label="semester" aria-describedby="inputGroup-sizing-default">
+	</div>
+	<div class="input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="inputGroup-sizing-default"><label for"comments" class="my-label">Comment</label></span>
+		</div>
+		<textarea class="form-control" id="comments" name="comments" value="<%= comment.comments %>" rows="10" cols="30" aria-label="comments" aria-describedby="inputGroup-sizing-default"></textarea>
+	</div>
+
+	<input type="hidden" name="student" id="student" value="<%= user._id %>" />
+	<input class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" name="submit">
+</form>
+</main>
+</body>
+</html>
