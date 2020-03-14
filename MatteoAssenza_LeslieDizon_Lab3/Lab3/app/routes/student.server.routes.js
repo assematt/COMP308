@@ -1,64 +1,34 @@
-// Load the module dependencies
-const students = require('../../app/controllers/student.server.controller');
-const passport = require('passport');
-
+// Load the 'Student' controller
+var users = require('../../app/controllers/student.server.controller');
+var express = require('express');
+var router = express.Router();
 // Define the routes module' method
 module.exports = function (app) {
-    app.get('/', students.render); // display the Links for other pages
-
-	// Set up the 'signup' routes 
-	app.route('/signup')
-        .get(students.renderSignUp)
-        .post(students.signUp);
-
-	// Set up the 'signin' routes 
-	app.route('/signin')
-        .get(students.renderSignIn)
-        .post(
-            passport.authenticate('local',
-            {
-			    successRedirect: '/',
-			    failureRedirect: '/signin',
-			    failureFlash: true
-            })
-        );
-
-    // Set up the 'displayallstudents' routes
-    app.route('/displayallstudents')
-        .get(students.displaystudents);
-
-	// Set up the 'signout' route
-    app.get('/signout', students.signout);
-
-    /*
-    app.get('/sign_in', students.renderSignIn); // render the login page
-    app.get('/sign_up', students.renderSignUp); // render the sign up page
-
-    // Set up the 'users' base routes
-    app.route('/students').post(students.signIn);
-
-    app.get('/sign_up', students.renderSignUp); // render the sign up page
-
-    app.route('/display')
-        .get(users.display);
-
-    // Set up the 'users' base routes
-    app.route('/users')
-        .post(users.create)
-        .get(users.list);
-
-    // Set up the 'users' parameterized routes
-    app.route('/users/:userId')
-        .get(users.read)
-        .put(users.update)
+    // handle a get request made to /users path
+    // and list users when /users link is selected
+    app.get("/users",users.list); //go to http://localhost:3000/users to see the list
+    //handle a post request made to root path
+    app.post('/', users.create);
+    //
+    // Set up the 'users' parameterized routes 
+	app.route('/users/:userId')
+    .get(users.read)
+    .put(users.update)
+    .delete(users.delete)
     // Set up the 'userId' parameter middleware
+    //All param callbacks will be called before any handler of 
+    //any route in which the param occurs, and they will each 
+    //be called only once in a request - response cycle, 
+    //even if the parameter is matched in multiple routes
     app.param('userId', users.userByID);
-    //
-    //update from edit .ejs page
-    //app.route('/edit').post(users.updateByUsername);
-    //display the document in edit_ejs page
-    app.route('/read_user').post(users.userByUsername);
-    app.route('/delete_user').get(users.showDeletePage);
-    //
-    app.route('/delete').delete(users.deleteByUserName);*/
+    //authenticate user
+    app.post('/signin', users.authenticate);
+    app.get('/signout', users.signout);
+    app.get('/read_cookie', users.isSignedIn);
+
+
+    //path to a protected page
+	app.get('/welcome',users.welcome);
+    
 };
+

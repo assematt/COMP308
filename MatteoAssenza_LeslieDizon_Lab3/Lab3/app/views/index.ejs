@@ -15,28 +15,7 @@
 		<path fill-rule="evenodd" d="M8.5 17.5v-7h1v7h-1z" clip-rule="evenodd"></path>
 		<path d="M4.5 13h1v1h-1v-1zm2 0h1v1h-1v-1zm-2 2h1v1h-1v-1zm2 0h1v1h-1v-1zm6-10h1v1h-1V5zm2 0h1v1h-1V5zm-4 2h1v1h-1V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zm-2 2h1v1h-1V9zm2 0h1v1h-1V9zm-4 0h1v1h-1V9zm0 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1z"></path>
 	</svg>
-	<h1 class="h3 mb-3 font-weight-normal">Course Evaluation <%= userFullName %></h1>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/signup" class="text-white">Sign Up as Student</a></div>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/signin" class="text-white">Sign In as Student</a></div>
-	<% 
-		if( userFullName && user.role == "Student" )
-		{
-	%>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/addcomment" class="text-white">Add Comment</a></div>
-	<%
-		}
-	%>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/displayallstudents" class="text-white">Display All Students</a></div>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/commentsbystudent" class="text-white">Display Comments by Student</a></div>
-
-	<% 
-		if( userFullName )
-		{
-	%>
-	<div class="p-3 mb-2 bg-dark text-white"><a href="/signout" class="text-white">Logout</a></div>
-	<%
-		}
-	%>
+	<h1 class="h3 mb-3 font-weight-normal"><%= title %></h1>
 </div>
 </main>
 </body>
