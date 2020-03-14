@@ -63,17 +63,20 @@ function App() {
   return (
     <div className="App">
       {screen === "auth" ? (
-        <div>
-          <label>Username: </label>
-          <br />
-          <input type="text" onChange={e => setUsername(e.target.value)} />
-          <br />
-          <label>Password: </label>
-          <br />
-          <input type="password" onChange={e => setPassword(e.target.value)} />
-          <br />
-          <button onClick={auth}>Login</button>
-        </div>
+        <form className="w-25 form-signin mx-auto">
+          <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+          <div className="form-group">
+            <label for="Username" className="sr-only">Username</label>
+            <input type="text" id="Username" className="form-control" placeholder="Username" required="" autofocus="" onChange={e => setUsername(e.target.value)}/>
+          </div>
+          <div className="form-group">
+            <label for="inputPassword" className="sr-only">Password</label>
+            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="" onChange={e => setPassword(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <Button onClick={auth} as="input" type="submit" value="Sign in" block />
+          </div>          
+        </form>
       ) : (
         <div />
       )}
