@@ -85,8 +85,8 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link href="/courses">List of All Courses</Nav.Link>
-              <Nav.Link href="/list">List of All Users</Nav.Link>
+              <Link className="nav-item nav-link" to={{ pathname: '/courses', state: { course: "all"} }}>List of All Courses</Link>
+              <Link className="nav-item nav-link" to="/list">List of All Users</Link>
               {screen === "auth" ? (
                 <Button href="/login" variant="primary" className="mr-1">Login</Button>
               ) :
@@ -116,7 +116,7 @@ function App() {
         <Route render={() => <CreateCourse />} path="/course" />
         <Route render={() => <ShowCourse />} exact path="/show/course/:id" />
         <Route render={() => <EditCourse />} exact path="/edit/course/:id" />
-        <Route render={() => <ListCourses />} path="/courses" />
+        <Route render={() => <ListCourses user="user" />} path="/courses" />
 
       </div>
     </Router>

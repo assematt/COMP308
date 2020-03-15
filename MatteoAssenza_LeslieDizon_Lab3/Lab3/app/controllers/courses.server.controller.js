@@ -3,7 +3,7 @@ const Article = mongoose.model('Course');
 const User = require('mongoose').model('Student');
 const config = require('../../config/config');
 const jwt = require('jsonwebtoken');
-const jwtKey =config.secretKey;
+const jwtKey = config.secretKey;
 
 //
 function getErrorMessage(err) {
@@ -28,23 +28,21 @@ exports.create = function (req, res) {
     console.log(req.body)
     //
     //
-    User.findOne({username: req.body.student}, (err, user) => {
+    User.findOne({ username: req.body.student }, (err, user) => {
         console.log("Found something with request: " + req.student);
-        if (err) 
-        { 
+        if (err) {
             console.log("user not found");
-            return getErrorMessage(err); 
+            return getErrorMessage(err);
         }
         console.log(user);
         //
         req.id = user._id;
         console.log('user._id', req.id);
 
-	
-    }).then( function () 
-    {
+
+    }).then(function () {
         article.student = req.id
-        console.log('req.user._id',req.id);
+        console.log('req.user._id', req.id);
 
         article.save((err) => {
             if (err) {
@@ -57,32 +55,47 @@ exports.create = function (req, res) {
                 res.status(200).json(article);
             }
         });
-    
+
     });
 };
 //
 exports.list = function (req, res) {
-    console.log("list request: ", req)
+    console.log("list request: ", req.query);
     var query;
-    if (req.body.user)
-        query = Article.find({student: req.body.user}).sort('-created').populate('student', 'firstName lastName fullName');
-    else
+    if (req.query.user) {
+        User.findOne({ username: req.query.user }, (err, user) => {
+            query = Article.find({ student: user._id }).sort('-created').populate('student', 'firstName lastName fullName');
+
+            query.exec((err, articles) => {
+                if (err) {
+                    return res.status(400).send({
+                        message: getErrorMessage(err)
+                    });
+                } else {
+                    res.status(200).json(articles);
+                }
+            });
+        });
+    }
+    else {
         query = Article.find().sort('-created').populate('student', 'firstName lastName fullName');
 
-    query.exec((err, articles) => {
-if (err) {
-        return res.status(400).send({
-            message: getErrorMessage(err)
+        query.exec((err, articles) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                res.status(200).json(articles);
+            }
         });
-    } else {
-        res.status(200).json(articles);
-    }
-});
+    }    
 };
 //
 exports.articleByID = function (req, res, next, id) {
-    Article.findById(id).populate('student', 'firstName lastName fullName username').exec((err, article) => {if (err) return next(err);
-    if (!article) return next(new Error('Failed to load article '
+    Article.findById(id).populate('student', 'firstName lastName fullName username').exec((err, article) => {
+        if (err) return next(err);
+        if (!article) return next(new Error('Failed to load article '
             + id));
         req.article = article;
         console.log('in articleById:', req.article)
@@ -129,8 +142,8 @@ exports.delete = function (req, res) {
 //The hasAuthorization() middleware uses the req.article and req.user objects
 //to verify that the current user is the creator of the current article
 exports.hasAuthorization = function (req, res, next) {
-    console.log('in hasAuthorization: ',req.article.student);
-    console.log('in hasAuthorization: ',req.cookies.token);
+    console.log('in hasAuthorization: ', req.article.student);
+    console.log('in hasAuthorization: ', req.cookies.token);
 
     const token = req.cookies.token;
 
@@ -141,14 +154,14 @@ exports.hasAuthorization = function (req, res, next) {
         // or if the signature does not match
         payload = jwt.verify(token, jwtKey);
         console.log('payload is: ', payload)
-      } catch (e) {
+    } catch (e) {
         if (e instanceof jwt.JsonWebTokenError) {
-          // if the error thrown is because the JWT is unauthorized, return a 401 error
-          return res.status(401).end()
+            // if the error thrown is because the JWT is unauthorized, return a 401 error
+            return res.status(401).end()
         }
         // otherwise, return a bad request error
         return res.status(400).end();
-      }
+    }
 
     if (req.article.student.username !== payload.username) {
         return res.status(403).send({

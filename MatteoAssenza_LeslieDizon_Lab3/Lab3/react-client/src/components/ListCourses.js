@@ -12,11 +12,18 @@ function ListCourses(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(apiUrl);
+
+      var userData = await axios.get("/read_cookie");
+
+      const data = {
+        user: props.location.state ? null : userData.data.screen
+      }
+
+      const result = await axios.get(apiUrl, { params: data });
       setData(result.data);
       setShowLoading(false);
     };
-
+    
     fetchData();
   }, []);
 
@@ -30,7 +37,7 @@ function ListCourses(props) {
     <div>
       {showLoading && <Spinner animation="border" role="status">
         <span className="sr-only">Loading...</span>
-      </Spinner>}      
+      </Spinner>}
       <Table striped responsive>
         <thead>
           <tr>
