@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,6 +6,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import axios from "axios";
 //
 import Button from "react-bootstrap/Button"
 import Navbar from "react-bootstrap/Navbar";
@@ -20,8 +21,56 @@ import ShowUser from "./components/ShowUser";
 
 import Home from "./components/Home";
 import Login from "./components/Login";
+import CreateCourse from "./components/CreateCourse"
+import ListCourses from "./components/ListCourses"
+import ShowCourse from "./components/ShowCourse"
+import EditCourse from "./components/EditCourse";
+
 //
 function App() {
+
+  const [screen, setScreen] = useState("auth");
+
+  const readCookie = async () => {
+    try {
+      console.log("--- in readCookie function ---");
+
+      //
+      const res = await axios.get("/read_cookie");
+      //
+      if (res.data.screen !== undefined) {
+        setScreen(res.data.screen);
+        console.log(res.data.screen);
+      }
+    } catch (e) {
+      setScreen("auth");
+      console.log(e);
+    }
+  };
+
+  const logOut = async () => {
+    try {
+      console.log("--- Loggin out function ---");
+
+      //
+      const res = await axios.get("/signout");
+      //
+      if (res.data.screen !== undefined) {
+        setScreen(res.data.screen);
+        console.log(res.data.screen);
+      }
+    } catch (e) {
+      setScreen("auth");
+      console.log(e);
+    }    
+  }
+
+  //runs the first time the view is rendered
+  //to check if user is signed in
+  useEffect(() => {
+    readCookie();
+  }, []); //only the first render
+
   return (
     <Router>
       <div className="container">
@@ -36,7 +85,14 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Button href="/login" variant="primary" className="mr-1">Login</Button>
+              <Nav.Link href="/courses">List of All Courses</Nav.Link>
+              <Nav.Link href="/list">List of All Users</Nav.Link>
+              {screen === "auth" ? (
+                <Button href="/login" variant="primary" className="mr-1">Login</Button>
+              ) :
+              (
+                <Button onClick={logOut} variant="primary" className="mr-1">Logout</Button>
+              )}              
               <Button href="/create" variant="outline-primary">Sign Up</Button>
               {/*
               <Nav.Link href="/login">Login</Nav.Link>
@@ -53,9 +109,15 @@ function App() {
         <Route render={() => <Home />} path="/home" />
         <Route render={() => <Login />} path="/login" />
         <Route render={() => <List />} path="/list" />
-        <Route render={() => <EditUser />} path="/edit/:id" />
+        <Route render={() => <EditUser />} exact path="/edit/:id" />
         <Route render={() => <CreateUser />} path="/create" />
-        <Route render={() => <ShowUser />} path="/show/:id" />
+        <Route render={() => <ShowUser />} exact path="/show/:id" />
+
+        <Route render={() => <CreateCourse />} path="/course" />
+        <Route render={() => <ShowCourse />} exact path="/show/course/:id" />
+        <Route render={() => <EditCourse />} exact path="/edit/course/:id" />
+        <Route render={() => <ListCourses />} path="/courses" />
+
       </div>
     </Router>
   );

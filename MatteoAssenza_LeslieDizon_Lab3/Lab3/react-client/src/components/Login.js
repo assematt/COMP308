@@ -30,6 +30,7 @@ function App() {
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
         console.log(res.data.screen);
+        window.location.reload(false);
       }
     } catch (e) {
       //print the error
@@ -78,7 +79,8 @@ function App() {
           </div>          
         </form>
       ) : (
-        <div />
+                  
+        <h1>Welcome, {screen}</h1>
       )}
     </div>
   );

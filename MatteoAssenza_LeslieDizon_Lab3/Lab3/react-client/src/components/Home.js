@@ -1,10 +1,55 @@
 
 import { withRouter } from 'react-router-dom';
 
-import React, { Component }  from 'react';
+import React, { useState, useEffect, Component }  from 'react';
+import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 function Home(props)
 {
+    const [screen, setScreen] = useState("auth");
+
+    const readCookie = async () => {
+      try {
+        console.log("--- in readCookie function ---");
+  
+        //
+        const res = await axios.get("/read_cookie");
+        //
+        if (res.data.screen !== undefined) {
+          setScreen(res.data.screen);
+          console.log(res.data.screen);
+        }
+      } catch (e) {
+        setScreen("auth");
+        console.log(e);
+      }
+    };
+  
+    const logOut = async () => {
+      try {
+        console.log("--- Loggin out function ---");
+  
+        //
+        const res = await axios.get("/signout");
+        //
+        if (res.data.screen !== undefined) {
+          setScreen(res.data.screen);
+          console.log(res.data.screen);
+        }
+      } catch (e) {
+        setScreen("auth");
+        console.log(e);
+      }    
+    }
+  
+    //runs the first time the view is rendered
+    //to check if user is signed in
+    useEffect(() => {
+      readCookie();
+    }, []); //only the first render
+  
+
     return (
         <div>
             <svg class="d-block mx-auto text-info" width="27em" height="27em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +58,16 @@ function Home(props)
                 <path d="M4.5 13h1v1h-1v-1zm2 0h1v1h-1v-1zm-2 2h1v1h-1v-1zm2 0h1v1h-1v-1zm6-10h1v1h-1V5zm2 0h1v1h-1V5zm-4 2h1v1h-1V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zm-2 2h1v1h-1V9zm2 0h1v1h-1V9zm-4 0h1v1h-1V9zm0 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1zm-4 2h1v1h-1v-1zm2 0h1v1h-1v-1zm2 0h1v1h-1v-1z"></path>
             </svg>
             <h1 className="text-center">Student Course System</h1>
-            <h6 className="text-center text-secondary">Please Login/Sign Up to start</h6>
+            {screen === "auth" ? (
+                <h6 className="text-center text-secondary">Please Login/Sign Up to start</h6>
+              ) :
+              (
+                <div className="text-center">
+                    <Button href="/course" variant="primary" className="mr-1">Create a course</Button>
+                    <Button href="/courses" variant="primary" className="mr-1">List courses</Button>
+                </div>
+              )}   
+            
         </div>        
     );
 }

@@ -5,10 +5,10 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import { withRouter } from 'react-router-dom';
 
-function List(props) {
+function ListCourses(props) {
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:3000/users";
+  const apiUrl = "http://localhost:3000/api/courses";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +22,7 @@ function List(props) {
 
   const showDetail = (id) => {
     props.history.push({
-      pathname: '/show/' + id
+      pathname: '/show/course/' + id
     });
   }
 
@@ -35,9 +35,9 @@ function List(props) {
         <thead>
           <tr>
             <th>#</th>
-            <th>First Name</th>
-            <th>Last heading</th>
-            <th>Student Id</th>
+            <th>Name</th>
+            <th>Section</th>
+            <th>Code</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -45,10 +45,10 @@ function List(props) {
           {data.map((item, idx) => (
             <tr>
               <td className="align-middle">{idx}</td>
-              <td className="align-middle">{item.firstName}</td>
-              <td className="align-middle">{item.lastName}</td>
-              <td className="align-middle">{item.username}</td>
-              <td><Button key={idx} action onClick={() => { showDetail(item._id) }}>View user</Button></td>
+              <td className="align-middle">{item.name}</td>
+              <td className="align-middle">{item.section}</td>
+              <td className="align-middle">{item.code}</td>
+              <td><Button key={idx} action onClick={() => { showDetail(item._id) }}>View course</Button></td>
             </tr>
           ))}
         </tbody>
@@ -57,4 +57,4 @@ function List(props) {
   );
 }
 
-export default withRouter(List);
+export default withRouter(ListCourses);

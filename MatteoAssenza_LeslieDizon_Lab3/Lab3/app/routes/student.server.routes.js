@@ -23,10 +23,13 @@ module.exports = function (app) {
     app.param('userId', users.userByID);
     //authenticate user
     app.post('/signin', users.authenticate);
-    app.get('/signout', users.signout);
+    app.get('/signout', (req, res) =>
+    {
+        console.log("Logging out");
+        users.signout(req, res);
+    });
     app.get('/read_cookie', users.isSignedIn);
-
-
+    
     //path to a protected page
 	app.get('/welcome',users.welcome);
     
