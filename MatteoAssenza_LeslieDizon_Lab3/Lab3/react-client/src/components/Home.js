@@ -64,8 +64,8 @@ function Home(props)
               (
                 <div className="text-center">
                     <h1>Welcome, {screen}</h1>
-                    <Button href="/course" variant="primary" className="mr-1">Create a course</Button>
-                    <Button href="/courses" variant="primary" className="mr-1">List courses</Button>
+                    <Button href="/course" variant="primary" className="mr-1">Create Course</Button>
+                    <Button href="/courses" variant="primary" className="mr-1">Courses Taken</Button>
                 </div>
               )}   
             

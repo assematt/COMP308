@@ -56,8 +56,8 @@ function ShowCourse(props) {
                         <p>Section: {data.section}</p>
                         <p>Semester: {data.semester}</p>
                         <p>
-                            <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Edit</Button>&nbsp;
-                            <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete</Button>
+                            <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Update Course</Button>&nbsp;
+                            <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Drop Course</Button>
                         </p>
                         <h2>Users taking this course</h2>
                         <ListGroup>

@@ -48,11 +48,6 @@ function ShowUser(props) {
         <h1>Name: {data.firstName}, {data.lastName}</h1>
         <p>Email: {data.email}</p>
         <p>User name: {data.username}</p>
-
-        <p>
-          <Button type="button" variant="primary" onClick={() => { editUser(data._id) }}>Edit</Button>&nbsp;
-          <Button type="button" variant="danger" onClick={() => { deleteUser(data._id) }}>Delete</Button>
-        </p>
       </Jumbotron>
     </div>
   );

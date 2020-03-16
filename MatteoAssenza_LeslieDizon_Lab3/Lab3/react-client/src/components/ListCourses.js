@@ -55,7 +55,7 @@ function ListCourses(props) {
               <td className="align-middle">{item.name}</td>
               <td className="align-middle">{item.section}</td>
               <td className="align-middle">{item.code}</td>
-              <td><Button key={idx} action onClick={() => { showDetail(item._id) }}>View course</Button></td>
+              <td><Button key={idx} action onClick={() => { showDetail(item._id) }}>View Students Taking Course</Button></td>
             </tr>
           ))}
         </tbody>

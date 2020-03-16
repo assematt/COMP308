@@ -91,7 +91,11 @@ function App() {
                 <Button href="/login" variant="primary" className="mr-1">Login</Button>
               ) :
               (
+                <>
+                <Link className="nav-item nav-link" to="/course">Create Course</Link>
+                <Link className="nav-item nav-link" to="/courses">Courses Taken</Link>
                 <Button onClick={logOut} variant="primary" className="mr-1">Logout</Button>
+                </>
               )}              
               <Button href="/create" variant="outline-primary">Sign Up</Button>
               {/*
