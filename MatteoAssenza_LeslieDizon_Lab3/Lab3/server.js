@@ -9,16 +9,26 @@
 //value if itdoesn 't exist.
 // Set the 'NODE_ENV' variable
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 // Load the module dependencies
-var mongoose = require('./config/mongoose'),
-    express = require('./config/express');
+const configureMongoose = require('./config/mongoose');
+const configureExpress = require('./config/express');
+const configurePassport = require('./config/passport');
+
 // Create a new Mongoose connection instance
-var db = mongoose();
+const db = configureMongoose();
+
 // Create a new Express application instance
-var app = express();
+const app = configureExpress();
+
+// Configure the Passport middleware
+const passport = configurePassport();
+
 // Use the Express application instance to listen to the '3000' port
 app.listen(5000);
+
 // Use the module.exports property to expose our Express application instance for external usage
 module.exports = app; //returns the application object
+
 // Log the server status to the console
 console.log('Server running at http://localhost:5000/');

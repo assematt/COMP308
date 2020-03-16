@@ -21,7 +21,7 @@ function App() {
     console.log(username);
     try {
       //make a get request to /authenticate end-point on the server
-      const loginData = { auth: { username, password } };
+      const loginData = { username: username, password: password } };
       //call api
       const res = await axios.post(apiUrl, loginData);
       console.log(res.data.auth);

@@ -22,7 +22,7 @@ module.exports = function (app) {
     //even if the parameter is matched in multiple routes
     app.param('userId', users.userByID);
     //authenticate user
-    app.post('/signin', users.authenticate);
+    app.post('/signin', users.signin);
     app.get('/signout', (req, res) =>
     {
         console.log("Logging out");

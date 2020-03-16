@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const jwtExpirySeconds = 300;
-const jwtKey =config.secretKey;
+const jwtKey = config.secretKey;
+const passport = require('passport');
 
 // Create a new error handling controller method
 const getErrorMessage = function(err) {
@@ -17,7 +18,7 @@ const getErrorMessage = function(err) {
 			// If a unique index error occurs set the message error
 			case 11000:
 			case 11001:
-				message = 'Username already exists';
+				message = 'Student number already exists';
 				break;
 			// If a general error occurs set the message error
 			default:
@@ -37,7 +38,8 @@ const getErrorMessage = function(err) {
 exports.create = function (req, res, next) {
     // Create a new instance of the 'User' Mongoose model
     var user = new User(req.body); //get data from React form
-    console.log("body: " + req.body.username);
+	console.log("body: " + req.body.username);
+	user.provider = 'local';
 
     // Use the 'User' instance's 'save' method to save a new user document
     user.save(function (err) {
@@ -47,7 +49,6 @@ exports.create = function (req, res, next) {
         } else {
             // Use the 'response' object to send a JSON response
             res.json(user);
-            
         }
     });
 };
@@ -108,7 +109,51 @@ exports.delete = function(req, res, next) {
 };
 //
 // authenticates a user
-exports.authenticate = function(req, res, next) {
+// Create a new controller method that signin students
+exports.signin = function (req, res, next) {
+	console.log(req.body);
+	const student = req.body;
+
+    passport.authenticate('local', (err, student, info) => {
+		console.log(student);
+		console.log(info);
+		console.log(err);
+		
+		if (err || !student) {
+            return next(err);
+        } else {
+            // Remove sensitive data before login
+            student.password = undefined;
+            student.salt = undefined;
+
+            // Use the Passport 'login' method to login
+            req.login(student, (err) => {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+					// Create a new token with the user id in the payload
+					// and which expires 300 seconds after issue
+					const token = jwt.sign({ username: user.username }, jwtKey, 
+						{algorithm: 'HS256', expiresIn: jwtExpirySeconds });
+					console.log('token:', token);
+					// set the cookie as the token string, with a similar max age as the token
+					// here, the max age is in milliseconds
+					res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000,httpOnly: true});
+					res.status(200).send({ screen: user.username });
+					//
+					//res.json({status:"success", message: "user found!!!", data:{user:
+					//user, token:token}});
+					
+					req.user = user;
+					//call the next middleware
+					next();
+                }
+            });
+        }
+    })(req, res, next);
+};
+
+/* exports.authenticate = function(req, res, next) {
 	// Get credentials from request
 	console.log(req.body)
 	const username = req.body.auth.username;
@@ -147,7 +192,7 @@ exports.authenticate = function(req, res, next) {
 		}
 		
 	});
-};
+}; */
 //
 // protected page uses the JWT token
 exports.welcome = (req, res) => {
@@ -185,11 +230,12 @@ exports.welcome = (req, res) => {
 //deletes the token on the client side by clearing the cookie named 'token'
 exports.signout = (req, res) => {	
 	res.clearCookie("token")
-	return res.redirect("/home");
+	//return res.redirect("/home");
 	return res.status('200').json({message: "signed out"})
 	// Redirect the user back to the main application page
 	//res.redirect('/');
 }
+
 //check if the user is signed in
 exports.isSignedIn = (req, res) => {
 	// Obtain the session token from the requests cookies,
@@ -225,7 +271,7 @@ exports.requiresLogin = function (req, res, next) {
     // Obtain the session token from the requests cookies,
 	// which come with every request
 	const token = req.cookies.token
-	console.log(token)
+	console.log(token);
 	// if the cookie is not set, return an unauthorized error
 	if (!token) {
 	  return res.send({ screen: 'auth' }).end();

@@ -1,6 +1,6 @@
 //express.js file is where we configure our Express application
 //
-// Load the module dependencies
+/* // Load the module dependencies
 var config = require('./config'),
     express = require('express'),
     morgan = require('morgan'),
@@ -9,7 +9,21 @@ var config = require('./config'),
     methodOverride = require('method-override'),
     session = require('express-session');
     const cookieParser = require('cookie-parser');
-    const cors = require('cors')
+    const cors = require('cors') */
+
+// Load the module dependencies
+const config = require('./config');
+const path = require('path');
+const express = require('express');
+const morgan = require('morgan');
+const compress = require('compression');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
     
 // Create a new Express application instance
@@ -36,7 +50,7 @@ module.exports = function () {
 		next();
     });
     app.use(cors());
-    //
+
     app.use(methodOverride()); // use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
     //handle the use of PUT or DELETE methods
     //override with POST having ?_method=DELETE or
@@ -50,6 +64,11 @@ module.exports = function () {
         resave: true,
         secret: config.sessionSecret
     }));
+
+    // Configure the Passport middleware
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     //Configure Express to use EJS module as the default template engine
     // Set the application view engine and 'views' folder
     app.set('views', './app/views');
