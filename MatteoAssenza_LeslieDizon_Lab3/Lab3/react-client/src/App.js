@@ -86,13 +86,13 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <Link className="nav-item nav-link" to={{ pathname: '/courses', state: { course: "all"} }}>List of All Courses</Link>
-              <Link className="nav-item nav-link" to="/list">List of All Users</Link>
+              <Link className="nav-item nav-link" to="/list">List of All Students</Link>
               {screen === "auth" ? (
                 <Button href="/login" variant="primary" className="mr-1">Login</Button>
               ) :
               (
                 <>
-                <Link className="nav-item nav-link" to="/course">Create Course</Link>
+                <Link className="nav-item nav-link" to="/course">Add a Course</Link>
                 <Link className="nav-item nav-link" to="/courses">Courses Taken</Link>
                 <Button onClick={logOut} variant="primary" className="mr-1">Logout</Button>
                 </>
