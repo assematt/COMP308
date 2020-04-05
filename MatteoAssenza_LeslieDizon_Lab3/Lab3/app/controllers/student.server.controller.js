@@ -183,8 +183,9 @@ exports.welcome = (req, res) => {
  //
  //sign out function in controller
 //deletes the token on the client side by clearing the cookie named 'token'
-exports.signout = (req, res) => {
+exports.signout = (req, res) => {	
 	res.clearCookie("token")
+	return res.redirect("/home");
 	return res.status('200').json({message: "signed out"})
 	// Redirect the user back to the main application page
 	//res.redirect('/');
@@ -197,7 +198,7 @@ exports.isSignedIn = (req, res) => {
 	console.log(token)
 	// if the cookie is not set, return 'auth'
 	if (!token) {
-	  return res.send({ screen: 'auth' }).end();
+	  return res.send({ screen: 'auth', studentId: null }).end();
 	}
 	var payload;
 	try {
@@ -216,7 +217,7 @@ exports.isSignedIn = (req, res) => {
 	}
   
 	// Finally, token is ok, return the username given in the token
-	res.status(200).send({ screen: payload.username });
+	res.status(200).send({ screen: payload.username, studentId: payload.id });
 }
 
 //isAuthenticated() method to check whether a user is currently authenticated

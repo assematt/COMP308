@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import { withRouter } from 'react-router-dom';
 
@@ -29,12 +30,37 @@ function List(props) {
     <div>
       {showLoading && <Spinner animation="border" role="status">
         <span className="sr-only">Loading...</span>
-      </Spinner> }
-      <ListGroup>
-        {data.map((item, idx) => (
-          <ListGroup.Item key={idx} action onClick={() => { showDetail(item._id) }}>{item.username}</ListGroup.Item>
-        ))}
-      </ListGroup>
+      </Spinner>}      
+      <Table striped responsive>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Student Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Program</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, idx) => (
+            <tr>
+              <td className="align-middle">{idx}</td>
+              <td className="align-middle">{item.username}</td>
+              <td className="align-middle">{item.firstName}</td>
+              <td className="align-middle">{item.lastName}</td>
+              <td className="align-middle">{item.address}</td>
+              <td className="align-middle">{item.city}</td>
+              <td className="align-middle">{item.phoneNumber}</td>
+              <td className="align-middle">{item.email}</td>
+              <td className="align-middle">{item.program}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
