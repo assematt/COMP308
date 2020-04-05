@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/addstyle.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<title>Lab 4 - Developing Web Apps with AI capabilities by Leslie and Matteo</title>
+	</head>
+	<body>
+		<div class="d-flex flex-column justify-content-center">
+			<div class="h1 text-center mb-5">Enter New Data to be tested</div>
+			<div class="d-flex justify-content-center">
+				<form method="post" action="/processData">
+					<div class="form-row form-group">
+						<div class="col">
+							<label for="sepalLength">Sepal Length</label>
+							<input type="text" class="form-control" name="sepalLength" placeholder="Sepal Length" />
+						</div>
+						<div class="col">
+							<label for="sepalWidth">Sepal Width</label>
+							<input type="text" class="form-control" name="sepalWidth" placeholder="Sepal Width" />
+						</div>
+					</div>
+					<div class="form-row form-group">
+						<div class="col">
+							<label for="petalLength">Petal Length</label>
+							<input type="text" class="form-control" name="petalLength" placeholder="Petal Length" />
+						</div>
+						<div class="col">
+							<label for="petalWidth">Petal Width</label>
+							<input type="text" class="form-control" name="petalWidth" placeholder="Petal Width" />
+						</div>
+					</div>
+					<div class="form-row form-group">
+						<div class="col">
+                            <label for="learningRate">Learning Rate</label>
+                            <input type="text" class="form-control" name="learningRate" placeholder="Learning Rate" />
+						</div>
+						<div class="col">
+                            <label for="epoch">Epoch</label>
+                            <input type="text" class="form-control" name="epoch" placeholder="Epoch" />
+						</div>
+					</div>
+					<div class="form-row form-group">
+						<div class="col">
+							<button class="btn btn-block btn-info" type="submit">Predict</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

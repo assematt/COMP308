@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Some Classifier </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+</head>
+<body>
+    <h1> Classification result: <%= classificationResult %> </h1>
+
+    <h2> The graph is just how to display points in different colors:</h2>
+    <canvas id="myChart" width="800" height="450"></canvas>
+    <script>
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+        var coordinates = [
+            { x: 0, y: 0 }, { x: 5, y: 5 }, { x: 15, y: 15 }, { x: 20, y: 20 }, { x: 25, y: 25 }
+        ];
+
+        var d1 = coordinates.slice(0, 3);
+        var d2 = coordinates.slice(3, coordinates.length);
+        var data = {
+            datasets: [
+                {
+                    label: "Most Relavant",
+                    borderColor: 'red',
+                    backgroundColor: 'rgba(255,0,0,0.5)',
+                    data: d1
+                },
+                {
+                    label: "Others",
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0,0,255,0.5)',
+                    data: d2
+                }
+            ]
+        };
+
+        new Chart(ctx, {
+            type: 'scatter',
+            data: data,
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart'
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            min: -2,
+                            stepSize: 5
+                        },
+                        type: 'linear',
+                        position: 'bottom',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'X axis label'
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: -2,
+                            stepSize: 5
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Y axis label'
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>
