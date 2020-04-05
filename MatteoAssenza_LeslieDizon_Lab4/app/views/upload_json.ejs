@@ -2,19 +2,23 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/addstyle.css" />
+		<link rel="stylesheet" type="text/css" href="css/MyStyle.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<title>Lab 4 - Developing Web Apps with AI capabilities by Leslie and Matteo</title>
 	</head>
-	<body>
-		<div class="h-50 d-flex flex-column justify-content-center">
-			<div class="h1 text-center mb-5">Upload JSON Iris Data</div>
-			<div class="d-flex justify-content-center">
-				<form method="post" enctype="multipart/form-data" action="/prepareTFModel">
-					<div class="form-group custom-file">
-						<input type="file" class="form-control file-upload" id="jsonfile" name="jsonfile" />
+	<body class="text-center">
+		<div class="form-signin">
+			<svg class="bi bi-upload text-info" width="27em" height="27em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M.5 8a.5.5 0 01.5.5V12a1 1 0 001 1h12a1 1 0 001-1V8.5a.5.5 0 011 0V12a2 2 0 01-2 2H2a2 2 0 01-2-2V8.5A.5.5 0 01.5 8zM5 4.854a.5.5 0 00.707 0L8 2.56l2.293 2.293A.5.5 0 1011 4.146L8.354 1.5a.5.5 0 00-.708 0L5 4.146a.5.5 0 000 .708z" clip-rule="evenodd"></path>
+				<path fill-rule="evenodd" d="M8 2a.5.5 0 01.5.5v8a.5.5 0 01-1 0v-8A.5.5 0 018 2z" clip-rule="evenodd"></path>
+			</svg>
+			<h1 class="h3 mb-3 font-weight-normal">Upload JSON Iris Data</h1>
+			<div class="p-3 mb-2 bg-dark text-white">
+				<form method="post" enctype="multipart/form-data" action="/prepareTFModel" class="form-signin">
+					<div class="input-group mb-3">
+						<input type="file" class="form-control" id="jsonfile" name="jsonfile" />
 					</div>
-					<button class="btn btn-block btn-info" type="submit">Upload</button>
+					<button class="btn btn-info" type="submit">Upload</button>
 				</form>
 			</div>
 		</div>

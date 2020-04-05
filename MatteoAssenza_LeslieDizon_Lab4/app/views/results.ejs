@@ -2,28 +2,29 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/addstyle.css" />
+		<link rel="stylesheet" type="text/css" href="css/MyStyle.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<title>Lab 4 - Developing Web Apps with AI capabilities by Leslie and Matteo</title>
 	</head>
     <body>
-        <div class="d-flex flex-column justify-content-center">
-			<div class="h1 text-center">Your Results:</div>
-                <div class="d-flex justify-content-center">
-                    <div class="form-row form-group">
-                        <div class="col">
-                            <label for="predictedClass">Predicted Class</label>
-                            <input type="text" class="form-control" name="predictedClass" value="<%= data.winner %>" readonly />
-                        </div>
-                    </div>
-                    <div class="form-row form-group">
-                        <div class="col">
-                            <label for="classProbabilities">Class Probabilities</label>
-                            <input type="text" class="form-control" name="classProbabilities" value="<%= data.logits %>" readonly />
-                        </div>
-                    </div>
-                </div>
+        <main role="main" class="container-main">
+            <div class="form-signin">
+                <svg class="bi bi-check-circle text-success" width="30em" height="30em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M17.354 4.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L10 11.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"></path>
+                    <path fill-rule="evenodd" d="M10 4.5a5.5 5.5 0 105.5 5.5.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 0010 4.5z" clip-rule="evenodd"></path>
+                </svg>
+
+                <h1 class="h3 mb-3 font-weight-normal">Predicted Class: </h1>
+                <p class="lead">
+                    <%= data.winner %>
+                </p>
+                <br/>
+                
+                <h1 class="h3 mb-3 font-weight-normal">Class Probabilities: </h1>
+                <p class="lead">
+                    <%= data.logits %>
+                </p>
             </div>
-        </div>
+        </main>
     </body>
 </html>

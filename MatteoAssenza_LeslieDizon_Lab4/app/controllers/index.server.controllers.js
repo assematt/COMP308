@@ -170,22 +170,24 @@ var getPrediction = (model, data, parameters, callback) => {
     });
 
     model.fit(trainingData, outputData, { epochs: parameters.epoch }).then(history => {
-        // var predictResult = model.predict(testingData).dataSync();
-        // var payload = {
-        //     predictOdds: (Math.max(...predictResult) * 100).toFixed(2),
-        //     species: outputMap[predictResult.indexOf(Math.max(...predictResult))]
-        // };
         const predictOut = model.predict(testingData);
         const logits = Array.from(predictOut.dataSync());
+
+        var logitsSpan = [];
+
+        logits.forEach((v) => {
+            console.log("The value of a is : " + v.toFixed(3));
+            logitsSpan.push(v.toFixed(3));
+        });
 
         console.log(predictOut.argMax(-1).dataSync()[0]);
 
         const winner = IRIS_CLASSES[predictOut.argMax(-1).dataSync()[0]];
         var payload = {
-            logits: logits,
+            logits: logitsSpan,
             winner: winner
         };
-        console.log("logits: " + logits);
+        console.log("logits: " + logitsSpan);
         console.log("winner: " + winner);
         
         callback(payload);
